@@ -44,6 +44,7 @@ class TrajGRU_Attention_ODE_EN(BaseConvRNN):
                                                act_type=act_type,
                                                prefix='TrajGRU_Attention_ODE_EN')
         self._L = L
+        self.device =device
         self.zz_connection = zz_connection
         self.ode_flag = ode_flag
         self.self_attention = self_attention
