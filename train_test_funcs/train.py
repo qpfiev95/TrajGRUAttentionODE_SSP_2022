@@ -8,8 +8,10 @@ import time
 import os.path as osp
 from datasets.kth_iterator import get_data_dict, get_next_batch
 
+print('test 2')
 def train_mnist(model, train_set, valid_set, irr_mode, criterion, optimizer, evaluator):
     ### Training
+    print('test 3')
     if cfg.MODEL.TRAINING_MODE == "continue":
         path = cfg.MODEL.LOAD_TRAIN_CONTINUE_DIR
         model_params = torch.load(path)
@@ -37,7 +39,7 @@ def train_mnist(model, train_set, valid_set, irr_mode, criterion, optimizer, eva
         en_timestep_list = np.load(os.path.join(cfg.MOVINGMNIST.MNIST_PATH, 'timesteps_encoder_both_100.npz'))['t']
     timestep_index = 0
     while iter_id < cfg.MODEL.TRAIN.MAX_ITER:
-        if (iter_id + 1) % (cfg.MODEL.UPDATE_ITER_INTERVAL) == 0:
+        if (iter_id + 1) % (cfg.MODEL.TRAIN.UPDATE_ITER_INTERVAL) == 0:
             print("update learning rate!!!")
             update_learning_rate(optimizer, decay_rate=cfg.MODEL.DECAY_RATE, lowest=cfg.MODEL.LR/10)
         if timestep_index == 100:
@@ -46,7 +48,7 @@ def train_mnist(model, train_set, valid_set, irr_mode, criterion, optimizer, eva
         en_timestep = en_timestep_list[timestep_index]
         fo_timestep = fo_timestep_list[timestep_index]
         frame_dat, en_dat, fo_dat = train_set.irregular_sample_fixed(
-            batch_size=cfg.MOVINGMNIST.TRAIN.BATCH_SIZE,
+            batch_size=cfg.MODEL.TRAIN.BATCH_SIZE,
             en_timestep=en_timestep,
             fo_timestep=fo_timestep,
             seqlen=30,
@@ -170,7 +172,7 @@ def train_mnist(model, train_set, valid_set, irr_mode, criterion, optimizer, eva
                 avg_mse = 0.0
                 avg_mae = 0.0
                 avg_ssim = 0.0
-            iter_id += 1
+        iter_id += 1
 
 def irregular_sample_fixed(data, en_timestep, fo_timestep):
     ### data: S x B x C x H x W
