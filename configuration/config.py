@@ -28,7 +28,7 @@ __C.MODEL.IN_LEN = 10
 __C.MODEL.OUT_LEN = 10
 __C.MODEL.TOTAL_LEN = 30 # 30: irr | 20: re
 __C.MODEL.T_EN = np.arange(1.0,float(__C.MODEL.IN_LEN),1.0)
-__C.MODEL.T_DE = np.arange(float(__C.MODEL.IN_LEN + 1.0),float(__C.MODEL.OUT_LEN),1.0)
+__C.MODEL.T_DE = np.arange(float(__C.MODEL.IN_LEN + 1.0),float(__C.MODEL.IN_LEN) + float(__C.MODEL.OUT_LEN) + 1.0, 1.0)
 __C.MODEL.ODE_METHODS = "euler" ### "dopri5" "euler"
 __C.MODEL.IRR_MODE = "regular" #  "encoder" | "decoder"| "both": irregularly sampled at encoder and decoder| "regular"
 __C.MODEL.RNN_ACT_TYPE = activation('leaky', negative_slope=0.2, inplace=True) ### inplace = True, testing
@@ -46,16 +46,21 @@ __C.MODEL.DECAY_RATE = 0.99
 __C.MODEL.LR = 1e-4 #  1e-4 | 1e-3 (Starting learning rate)
 ## Save
 __C.MODEL.SAVE_CHECKPOINT_DIR = os.path.join(__C.ROOT_DIR,
-                                             'results/save_kth_irr/en_re_fo_re/trajgru_attention_ode_v3/model_params/en_a23_fo_a21/')
+                                             f'results/{__C.MODEL.DATASET}/{__C.MODEL.IRR_MODE}/{__C.MODEL.TECH}/model_params/en_a23_de_a21/')
+os.makedirs(__C.MODEL.SAVE_CHECKPOINT_DIR, exist_ok = True)
 __C.MODEL.LOAD_TEST_DIR = os.path.join(__C.ROOT_DIR,
-                                             'results/save_kth_irr/en_re_fo_re/trajgru_attention_ode_v3/model_params/en_a23_fo_a21/')
+                                             f'results/{__C.MODEL.DATASET}/{__C.MODEL.IRR_MODE}/{__C.MODEL.TECH}/model_params/en_a23_de_a21/')
+os.makedirs(__C.MODEL.LOAD_TEST_DIR, exist_ok = True) 
 __C.MODEL.TRAIN_IMAGE_PATH = os.path.join(__C.ROOT_DIR,
-                                             'results/save_kth_irr/en_re_fo_re/trajgru_attention_ode_v3/model_params/en_a23_fo_a21/')
+                                             f'results/{__C.MODEL.DATASET}/{__C.MODEL.IRR_MODE}/{__C.MODEL.TECH}/train_results/en_a23_de_a21/')
+os.makedirs(__C.MODEL.TRAIN_IMAGE_PATH, exist_ok = True)
 __C.MODEL.TEST_IMAGE_PATH = os.path.join(__C.ROOT_DIR,
-                                             'results/save_kth_irr/en_re_fo_re/trajgru_attention_ode_v3/model_params/en_a23_fo_a21/')
-__C.MODEL.TRAINING_MODE = "continue"
+                                             f'results/{__C.MODEL.DATASET}/{__C.MODEL.IRR_MODE}/{__C.MODEL.TECH}/test_results/en_a23_de_a21/')
+os.makedirs(__C.MODEL.TEST_IMAGE_PATH, exist_ok = True) 
+__C.MODEL.TRAINING_MODE = "ncontinue"
 __C.MODEL.LOAD_TRAIN_CONTINUE_DIR = os.path.join(__C.ROOT_DIR,
-                                             'results/save_kth_irr/en_re_fo_re/trajgru_attention_ode_v3/model_params/en_a23_fo_a21/')
+                                             f'results/{__C.MODEL.DATASET}/{__C.MODEL.IRR_MODE}/{__C.MODEL.TECH}/model_params/en_a23_de_a21/')
+os.makedirs(__C.MODEL.LOAD_TRAIN_CONTINUE_DIR, exist_ok = True) 
 ## Validation
 __C.MODEL.VALID = edict()
 __C.MODEL.VALID.VALID_NUM = 500 # 500
@@ -87,6 +92,7 @@ __C.MOVINGMNIST.SUB_OUT_LEN = 2
 __C.MOVINGMNIST.TESTING_LEN = 20
 __C.MOVINGMNIST.IMG_SIZE = 64
 ###     KTH Action    #########################################################################
+__C.KTH = edict()
 __C.KTH.TOTAL_LEN = 20
 
 ### Vid-ODE  ####################################################################################
