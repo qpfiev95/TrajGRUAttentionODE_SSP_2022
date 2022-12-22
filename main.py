@@ -4,14 +4,14 @@ sys.path.insert(0, '../../')
 import torch
 from configuration.config import cfg
 from operators.loss_funcs import MyMseMaeSSIM, Weighted_MSE_MAE_hko
-from train_test_funcs.train_kth_irr import train_valid
 import numpy as np
 from train_test_funcs.train import train_mnist, train_kth
 from train_test_funcs.test import test_mnist, test_kth
 
 ## 0) Params
-time_step_encoder = torch.from_numpy(cfg.MODEL.T_EN).to(cfg.GLOBAL.DEVICE)
-time_step_decoder = torch.from_numpy(cfg.MODEL.T_DE).to(cfg.GLOBAL.DEVICE)
+time_step_encoder = torch.from_numpy(cfg.MODEL.T_EN).to(cfg.GLOBAL.DEVICE_EN)
+time_step_decoder = torch.from_numpy(cfg.MODEL.T_DE).to(cfg.GLOBAL.DEVICE_DE)
+print(time_step_decoder)
 ## 1) Model
 if cfg.MODEL.TECH == "ConvGRU":
     from configuration.net_params_ConvGRU import encoder_params, decoder_params
